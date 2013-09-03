@@ -12,27 +12,25 @@ house(fanDimensions, fanDiameter, numberOfOutlets);
 module house(whd, fd, noo){
 	translate([0,0,basedebth/2])
 	difference(){
+union(){
+cylinders(10, noo, fd/2+2);
+
 		sphere(fd/2+1.5);
+
+}
 		sphere(fd/2);
 		translate([-fd/2-1.5,-fd/2-1.5,-fd/2-1.5])
 		cube([fd+3,fd+3,fd/2+3]);
                 cylinders(8, noo, fd);
         }
-	        cylinders(8, noo, fd);
         
 }
-
-
-
 
 module cylinders(rad, noo, fd){
 	for(i = [0: noo-1]){
 		rotate( i * 360 / noo-180/noo, [0, 0, 1])
 		rotate(-45, [1,0,0])
-		difference(){
-	  	cylinder(h=fd, r=rad+2 );
 		cylinder(h=fd, r=rad);
-	}
 }
 }
 
