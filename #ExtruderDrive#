@@ -1,0 +1,7 @@
+hull(){
+ translate([20, -20, 40])rotate(40, [1,0,0])
+ translate([0, 0,-2.5])
+ cylinder(r=19);
+ translate([0, 0,1.5])
+ cylinder(h=1, r=fanDiameter/2);
+}
