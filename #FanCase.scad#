@@ -15,7 +15,7 @@ union(){
 }
 
 module house(whd, fd, noo){
-	translate([0,0,basedepth/1.5])
+	translate([0,0,basedepth/2])
 	difference(){
 union(){
 cylinders(10, noo, fd/2+2);

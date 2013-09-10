@@ -1,0 +1,95 @@
+fanDimensions = [80, 80, 15];
+fanDiameter = 78;
+basedepth = 5;
+NumberOfOutlets = 4;
+$fn = 100;
+
+
+//base(basedepth, fanDimensions, fanDiameter);
+house(basedepth, fanDimensions, fanDiameter, NumberOfOutlets);
+
+module house(bd, whd, fd, no){
+	translate([0,0,basedebth/2])
+	difference(){
+		union(){
+			sphere(fd/2);
+			for ( i = [0 : no-1] ){	
+			  	rotate( i * 360/no-180/no, [0, 0, 1])
+			  	translate([0, fd/3, fd/3])
+				rotate( -45, [1, 0, 0])
+			  	cylinder(h=2, r=10);
+			}
+		}
+		sphere(fd/2-1.5);
+		translate([0,0,-fd/4-bd/2])
+		cube([fd,fd,fd/2], center=true);
+		for ( i = [0 : no-1] ){	
+		  	rotate( i * 360/no-180/no, [0, 0, 1])
+		  	translate([0, fd/3-1, fd/3-1])
+			rotate( -45, [1, 0, 0])
+		  	cylinder(h=10, r=8);
+		}
+	}
+base(bd, whd, fd);
+}
+module house01(bd, whd, fd, no){
+	translate([0,0,basedebth/2])
+	difference(){
+		union(){
+			sphere(fd/2);
+			for ( i = [0 : no-1] ){	
+			  	rotate( i * 360/no-180/no, [0, 0, 1])
+			  	translate([0, fd/3, fd/3])
+				rotate( -45, [1, 0, 0])
+			  	cylinder(h=2, r=10);
+			}
+		}
+		sphere(fd/2-1.5);
+		translate([0,0,-fd/4-bd/2])
+		cube([fd,fd,fd/2], center=true);
+		for ( i = [0 : no-1] ){	
+		  	rotate( i * 360/no-180/no, [0, 0, 1])
+		  	translate([0, fd/3-1, fd/3-1])
+			rotate( -45, [1, 0, 0])
+		  	cylinder(h=10, r=8);
+		}
+	}
+base(bd, whd, fd);
+}
+
+module reprapFastener(whd){
+rd = 8;//RodRadius
+dbr = 58;//Distance between rodcenters
+
+translate([-whd[0]/2, -whd[0]/2, 0]) rotate([90,0,0])
+cylinder(10);
+
+}
+
+reprapFastener(fanDimensions);
+
+module base(bd, whd, fd){
+cr = 8;
+sd = 4;
+
+
+difference(){
+	hull(){
+		cornerCylinders(bd, [-whd[0]/2+cr, -whd[1]/2+cr, 0], cr);
+		cornerCylinders(bd, [whd[0]/2-cr, -whd[1]/2+cr, 0], cr);
+		cornerCylinders(bd, [-whd[0]/2+cr, whd[1]/2-cr, 0], cr);
+		cornerCylinders(bd, [whd[0]/2-cr, whd[1]/2-cr, 0], cr);
+	}
+		cornerCylinders(bd + 0.1, [-whd[0]/2+cr, -whd[1]/2+cr, 0], sd);
+		cornerCylinders(bd + 0.1, [whd[0]/2-cr, -whd[1]/2+cr, 0], sd);
+		cornerCylinders(bd + 0.1, [-whd[0]/2+cr, whd[1]/2-cr, 0], sd);
+		cornerCylinders(bd + 0.1, [whd[0]/2-cr, whd[1]/2-cr, 0], sd);
+		cornerCylinders(bd + 0.1, [0, 0, 0], (fd/2)-2);
+}
+	module cornerCylinders(h, pos, rad){
+		translate(pos)
+		cylinder(h = h, r=rad, center=true);
+	}
+}
+
+
